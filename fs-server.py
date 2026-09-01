@@ -6,14 +6,12 @@ from typing import Dict
 
 mcp = FastMCP("Moodle Upgrade Assistant")
 
-CURRENT_DIR = "C:/xampp/htdocs/cmsu-lms-moodle"  # Your v4.4.5
-STABLE_DIR = "D:/Work/Projects/cmsu-moodle-projects/vanilla-moodle-4.4.12" # Clean v4.4.12
-NEW_UPDATED_DIR = "C:/xampp/htdocs/moodle-4.4.12"  # Your v4.4.12e
+CURRENT_DIR = "C:/xampp/htdocs/cmsu-lms-moodle"  # main branch, v4.4.5
+UAT_BACKUP_DIR = "D:/Work/Manabi/Code/cmsu-lms-moodle-4.4.12-uat-bkp-01-09-26"  # UAT branch backup, v4.4.12
 
 FOLDERS: Dict[str, str] = {
     "custom": CURRENT_DIR,
-    "vanilla": STABLE_DIR,
-    "updated": NEW_UPDATED_DIR,
+    "uat": UAT_BACKUP_DIR,
 }
 
 print("✅ Moodle Upgrade Assistant is running...", file=sys.stderr)
@@ -47,7 +45,7 @@ def list_directory_contents(relative_path: str = "", folder: str = "custom") -> 
     Lists folders and files in the selected folder.
     Defaults to the custom project for backward compatibility.
 
-    folder options: custom, vanilla, updated
+    folder options: custom, uat
     """
     try:
         base_dir = _get_folder_path(folder)
@@ -79,12 +77,12 @@ def list_directory_contents(relative_path: str = "", folder: str = "custom") -> 
     return "\n".join(output)
 
 @mcp.tool()
-def view_file_diff(relative_path: str, from_folder: str = "vanilla", to_folder: str = "custom") -> str:
+def view_file_diff(relative_path: str, from_folder: str = "custom", to_folder: str = "uat") -> str:
     """
     Compares a file between any two configured folders.
-    Defaults to: vanilla -> custom.
+    Defaults to: custom -> uat.
 
-    folder options: custom, vanilla, updated
+    folder options: custom, uat
     """
     try:
         from_base_dir = _get_folder_path(from_folder)
